@@ -47,7 +47,6 @@ public class StainlessWorkTableSearch {
         // compare the expected title of result page with actual title
         assertTrue(driver.findElement(By.xpath("//div[@id='search-elastic']//*[contains(text(),'Search Results for:')]")).getText().toLowerCase().contains(searchValue));
 
-        //Get results from the page!!!
         //get pagination length
         int paginationLength;
         if(driver.findElements(By.cssSelector(".pagination ul li")).isEmpty()) {
@@ -59,24 +58,20 @@ public class StainlessWorkTableSearch {
         }
         System.out.println(paginationLength);
 
-        // Array to check all results
-
-        List<WebElement> allSearchResults = new ArrayList<>();
+        // check all result
         for(int i = 1; i <= paginationLength; i++) {
-           // wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#product_listing")));
-
+            Thread.sleep(1000);// wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#product_listing")));
             List<WebElement> pageSearchResults = driver.findElements(By.cssSelector("div.details > a.description"));
-            allSearchResults.addAll(pageSearchResults);
-            System.out.println("!!!!!!!!Number of elements on page " + i + ": " + allSearchResults.size());
+
+            System.out.println("!!!!!!!!Number of elements on page " + i + ": " + pageSearchResults.size());
+            for(WebElement element: pageSearchResults) {
+                assertTrue(element.getText().contains("Work Table"), element.getText());
+            }
             WebElement nextBtn = driver.findElement(By.cssSelector(".icon-right-open"));
-            /*for(WebElement element: pageSearchResults) {
-                System.out.println(element.getText());
-                assertTrue(element.getText().contains("Work Table"));
-            }*/
             nextBtn.click();
-            Thread.sleep(1000);
 
         }
+
 
 
 
