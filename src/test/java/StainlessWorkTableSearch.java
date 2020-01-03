@@ -7,8 +7,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -27,11 +29,12 @@ public class StainlessWorkTableSearch {
         driver = new ChromeDriver();
         driver.get("https://www.webstaurantstore.com");
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
     }
 
     @AfterEach
     void tearDown() throws Exception {
-        //driver.quit();
+        driver.quit();
     }
 
     @Test
@@ -68,12 +71,16 @@ public class StainlessWorkTableSearch {
             WebElement nextBtn = driver.findElement(By.cssSelector(".icon-right-open"));
             nextBtn.click();
         }
-        System.out.println(lastItem.getText());
-        lastItem.click();
 
         //Add the last item into the cart
+        lastItem.click();
+        //WebDriverWait wait = new WebDriverWait(driver,30);
+        Thread.sleep(1000); // wait.until(ExpectedConditions.presenceOfElementLocated(By.id("#buyButton")));
+        driver.findElement(By.xpath("//input[@id='buyButton']")).click();
+        driver.findElement(By.xpath("//*[contains(text(), ' View Cart')]")).click();
 
-
+        Thread.sleep(5000);
+        //(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#product_listing")));
 
 
 
