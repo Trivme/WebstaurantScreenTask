@@ -8,9 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,11 +31,13 @@ public class StainlessWorkTableSearch {
 
     @AfterEach
     void tearDown() throws Exception {
-        driver.quit();
+        //driver.quit();
     }
+
     @Test
     void SearchTest() throws InterruptedException {
         String searchValue = "stainless work table";
+        String checkValue = "Table";
 
         WebElement searchBox = driver.findElement(By.id("searchval"));
         WebElement searchBtn = driver.findElement(By.cssSelector("[value='Search']"));
@@ -56,21 +55,24 @@ public class StainlessWorkTableSearch {
             WebElement lastPage = pagination.get(pagination.size() - 2);
             paginationLength = Integer.parseInt(lastPage.getText());
         }
-        System.out.println(paginationLength);
 
-        // check all result
+        WebElement lastItem = null;
+        // check all result on each paginate
         for(int i = 1; i <= paginationLength; i++) {
             Thread.sleep(1000);// wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#product_listing")));
             List<WebElement> pageSearchResults = driver.findElements(By.cssSelector("div.details > a.description"));
-
-            System.out.println("!!!!!!!!Number of elements on page " + i + ": " + pageSearchResults.size());
+            lastItem = pageSearchResults.get(pageSearchResults.size()-1);
             for(WebElement element: pageSearchResults) {
-                assertTrue(element.getText().contains("Work Table"), element.getText());
+                assertTrue(element.getText().contains(checkValue), element.getText());
             }
             WebElement nextBtn = driver.findElement(By.cssSelector(".icon-right-open"));
             nextBtn.click();
-
         }
+        System.out.println(lastItem.getText());
+        lastItem.click();
+
+        //Add the last item into the cart
+
 
 
 
