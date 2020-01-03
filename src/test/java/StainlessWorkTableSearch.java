@@ -9,6 +9,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,17 +61,21 @@ public class StainlessWorkTableSearch {
 
         // Array to check all results
 
-
+        List<WebElement> allSearchResults = new ArrayList<>();
         for(int i = 1; i <= paginationLength; i++) {
            // wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#product_listing")));
-            Thread.sleep(2000);
-            List <WebElement> pageSearchResults = driver.findElements(By.cssSelector("div.details > a.description"));
-            System.out.println("Number of elements on page " + i + ": " + pageSearchResults.size());
+
+            List<WebElement> pageSearchResults = driver.findElements(By.cssSelector("div.details > a.description"));
+            allSearchResults.addAll(pageSearchResults);
+            System.out.println("!!!!!!!!Number of elements on page " + i + ": " + allSearchResults.size());
             WebElement nextBtn = driver.findElement(By.cssSelector(".icon-right-open"));
+            /*for(WebElement element: pageSearchResults) {
+                System.out.println(element.getText());
+                assertTrue(element.getText().contains("Work Table"));
+            }*/
             nextBtn.click();
-            //for (WebElement ele: pageSearchResults){
-              //  assertTrue(ele.getText().toLowerCase().contains("table"));
-            //}
+            Thread.sleep(1000);
+
         }
 
 
