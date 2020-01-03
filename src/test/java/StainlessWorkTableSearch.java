@@ -18,9 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class StainlessWorkTableSearch {
-
     private static WebDriver driver;
-    private WebDriverWait wait;
 
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
@@ -33,7 +31,6 @@ public class StainlessWorkTableSearch {
         driver.get("https://www.webstaurantstore.com");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
-
     }
 
     @AfterEach
@@ -97,9 +94,11 @@ public class StainlessWorkTableSearch {
         (new WebDriverWait(driver, 3)).until(
                 ExpectedConditions.presenceOfElementLocated(By.xpath("//button[contains(text(),'Empty Cart')]")));
         driver.findElement(By.xpath("//button[contains(text(),'Empty Cart')]")).click();
+
         (new WebDriverWait(driver, 3)).until(
-                ExpectedConditions.textToBePresentInElementLocated(By.xpath("//p[@class='header-1']"), "Your cart is empty."));
-        //(new WebDriverWait(driver, 3)).until(ExpectedConditions.presenceOfElementLocated(By.xpath("//p[@class='header-1']")));
+                ExpectedConditions.textToBePresentInElementLocated(
+                        By.xpath("//p[@class='header-1']"), "Your cart is empty.")
+                );
 
     }
 }
