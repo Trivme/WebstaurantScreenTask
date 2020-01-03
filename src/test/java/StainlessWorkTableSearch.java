@@ -77,7 +77,7 @@ public class StainlessWorkTableSearch {
         //WebDriverWait wait = new WebDriverWait(driver,30);
         Thread.sleep(1000); // wait.until(ExpectedConditions.presenceOfElementLocated(By.id("#buyButton")));
         driver.findElement(By.xpath("//input[@id='buyButton']")).click();
-        driver.findElement(By.xpath("//*[contains(text(), ' View Cart')]")).click();
+        driver.findElement(By.xpath("//span[contains(text(),'Cart')]")).click();
 
         Thread.sleep(5000);
         //(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#product_listing")));
